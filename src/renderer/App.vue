@@ -1,12 +1,17 @@
 <template>
 	<div id="app">
-		<router-view></router-view>
+		<Header />
+		<router-view class="page"></router-view>
 	</div>
 </template>
 
 <script>
+	import Header from '@/components/Header';
+
 	export default {
-		name: 'tekken-save-scummer'
+		components: {
+			Header
+		}
 	};
 </script>
 
@@ -22,16 +27,29 @@
 		font-style: normal;
 	}
 
+	body, html {
+		margin: 0;
+		padding: 0;
+		height: 100%;
+	}
+
 	body {
 		background: $background;
 		background-size: cover;
 		font-family: 'Roboto Mono';
 		color: $text-color;
 
-		#wrapper {
-			height: 400px;
-			background-color: $overlay-background;
-			color: $text-color;
+		#app {
+			display: flex;
+			flex-direction: column;
+			height: 100%;
+		}
+
+		.page {
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			padding: 10px;
 		}
 	}
 </style>

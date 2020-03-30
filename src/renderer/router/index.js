@@ -7,8 +7,13 @@ export default new Router({
 	routes: [
 		{
 			path: '/',
-			name: 'landing-page',
-			component: require('@/components/LandingPage').default
+			name: 'initial-config',
+			component: require('@/views/InitialConfig').default
+		},
+		{
+			path: '/save-manager',
+			name: 'save-manager',
+			component: require('@/views/SaveManager').default
 		},
 		{
 			path: '*',
