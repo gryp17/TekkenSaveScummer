@@ -1,6 +1,6 @@
-# tekken-save-scummer
+# TekkenSaveScummer
 
-> An application for backing up and restoring tekken 7 online save files (also known as save scumming)
+An application for backing up and restoring tekken 7 online save files (also known as save scumming)
 
 #### Build Setup
 
