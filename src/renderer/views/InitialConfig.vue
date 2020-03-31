@@ -1,14 +1,28 @@
 <template>
 	<div class="initial-config-page">
 		<PageWrapper v-show="!loading">
-			initial config page
-
 			<div v-if="saveFound">
 				Save found at {{ defaultSaveLocation }}
 			</div>
-			<div v-else>
-				No tekken save was found.
-				Please specify the tekken save location. (The default location is {{ defaultSaveLocation }})
+			<div class="save-not-found" v-else>
+				<i class="fas fa-exclamation-triangle"></i>
+
+				<h3>
+					No tekken save was found
+				</h3>
+
+				<p>
+					Please specify the tekken save location.
+					<br />
+					<span class="small">
+						(The default location is {{ defaultSaveLocation }})
+					</span>
+				</p>
+
+				<FormButton>
+					<i class="far fa-folder-open"></i>
+					Select save folder
+				</FormButton>
 			</div>
 		</PageWrapper>
 	</div>
@@ -66,3 +80,26 @@
 		}
 	};
 </script>
+
+<style scoped lang="scss">
+	.initial-config-page {
+
+		.page-wrapper {
+			display: flex;
+			    justify-content: center;
+				align-items: center;
+		}
+
+		.save-not-found {
+			text-align: center;
+
+			.fa-exclamation-triangle {
+				font-size: 60px;
+			}
+
+			.small {
+				font-size: 13px;
+			}
+		}
+	}
+</style>

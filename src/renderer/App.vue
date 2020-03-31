@@ -6,7 +6,14 @@
 </template>
 
 <script>
+	import Vue from 'vue';
+
 	import Header from '@/components/Header';
+
+	//common/global components
+	import FormButton from '@/components/FormButton';
+
+	Vue.component('FormButton', FormButton);
 
 	export default {
 		components: {
@@ -38,6 +45,18 @@
 		background-size: cover;
 		font-family: 'Roboto Mono';
 		color: $text-color;
+
+		:focus {
+			outline:none;
+		}
+
+		::-moz-focus-inner {
+			border: 0;
+		}
+
+		button:focus {
+			outline: none;
+		}
 
 		#app {
 			display: flex;
