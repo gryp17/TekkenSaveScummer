@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, Menu } from 'electron';
 
 //import the vuex store in order to make it work between windows
 import '../renderer/store';
@@ -30,6 +30,18 @@ function createWindow() {
 	});
 
 	mainWindow.loadURL(winURL);
+
+	//temporal menu
+	const menu = Menu.buildFromTemplate([
+		{
+			label: 'Reset',
+			click() {
+				mainWindow.loadURL(winURL);
+			}
+		}
+	]);
+
+	Menu.setApplicationMenu(menu);
 
 	mainWindow.on('closed', () => {
 		mainWindow = null;

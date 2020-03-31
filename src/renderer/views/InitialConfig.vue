@@ -1,10 +1,7 @@
 <template>
 	<div class="initial-config-page">
 		<PageWrapper v-show="!loading">
-			<div v-if="saveFound">
-				Save found at {{ defaultSaveLocation }}
-			</div>
-			<div class="save-not-found" v-else>
+			<div class="save-not-found">
 				<i class="fas fa-exclamation-triangle"></i>
 
 				<h3>
@@ -15,11 +12,11 @@
 					Please specify the tekken save location.
 					<br />
 					<span class="small">
-						(The default location is {{ defaultSaveLocation }})
+						(Default location: {{ defaultSaveLocation }})
 					</span>
 				</p>
 
-				<FormButton>
+				<FormButton @click="openSaveLocationDialog">
 					<i class="far fa-folder-open"></i>
 					Select save folder
 				</FormButton>
@@ -33,13 +30,12 @@
 	import path from 'path';
 	import fs from 'fs';
 	import { remote } from 'electron';
+	import { mapState, mapActions } from 'vuex';
+	import config from '@/config';
 
 	import PageWrapper from '@/components/PageWrapper';
 
-	//all those need to be moved to a config
-	const homeDir = remote.app.getPath('home');
-	const localSubdir = '/AppData/Local/';
-	const tekkenFolder = 'TekkenGame';
+	const { homeDir, localSubdir, defaultSaveLocation } = config;
 
 	export default {
 		components: {
@@ -48,26 +44,30 @@
 		data() {
 			return {
 				loading: true,
-				saveFound: false,
-				defaultSaveLocation: path.join(homeDir, localSubdir, tekkenFolder)
+				defaultSaveLocation
 			};
 		},
+		computed: {
+			...mapState('save', [
+				'folder'
+			])
+		},
 		created() {
-			this.directoryExists(this.defaultSaveLocation).then((exists) => {
-				this.saveFound = exists;
-				this.loading = false;
-			});
+			//check the store folder or the default save location for the save folder
+			const saveDirectory = this.folder || this.defaultSaveLocation;
 
-			/*
-			//TODO: check if the save location/config is OK and redirect to the save manager
-			setTimeout(() => {
-				this.$router.push({
-					name: 'save-manager'
-				});
-			}, 5000);
-			*/
+			this.directoryExists(saveDirectory).then((exists) => {
+				this.loading = false;
+
+				if (exists) {
+					this.goToSaveManager();
+				}
+			});
 		},
 		methods: {
+			...mapActions('save', [
+				'setSaveFolder'
+			]),
 			directoryExists(directory) {
 				const stat = util.promisify(fs.stat);
 
@@ -75,6 +75,29 @@
 					return stats && stats.isDirectory();
 				}).catch(() => {
 					return false;
+				});
+			},
+			goToSaveManager() {
+				this.$router.push({
+					name: 'save-manager'
+				});
+			},
+			openSaveLocationDialog() {
+				const options = {
+					defaultPath: path.join(homeDir, localSubdir),
+					properties: [
+						'openDirectory'
+					]
+				};
+
+				remote.dialog.showOpenDialog(options).then(({ canceled, filePaths }) => {
+					if (canceled || !filePaths) {
+						return;
+					}
+
+					const saveFolder = filePaths[0];
+					this.setSaveFolder(saveFolder);
+					this.goToSaveManager();
 				});
 			}
 		}
