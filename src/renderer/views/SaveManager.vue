@@ -3,7 +3,10 @@
 		<PageWrapper>
 
 			<div class="current-save-wrapper">
-				<CurrentSaveFolder :stats="folderStats"/>
+				<CurrentSaveFolder 
+					:stats="folderStats"
+					:location="folder"
+				/>
 			</div>
 
 			<hr />
@@ -78,7 +81,6 @@
 
 <style scoped lang="scss">
 	.save-manager-page {
-
 		.current-save-wrapper {
 			text-align: center;
 		}
