@@ -9,15 +9,18 @@
 				/>
 			</div>
 
-			<SaveProfilesList />
+			<SaveProfilesList @make-backup="makeBackup"/>
 		</PageWrapper>
 	</div>
 </template>
 
 <script>
 	import util from 'util';
+	import path from 'path';
 	import fs from 'fs';
 	import du from 'du';
+	import { ncp } from 'ncp';
+	import { remote } from 'electron';
 
 	import { mapState, mapActions } from 'vuex';
 	import PageWrapper from '@/components/PageWrapper';
@@ -74,6 +77,16 @@
 					this.setFolderStats(folderStats);
 				}).catch(() => {
 					this.goToInitialConfig();
+				});
+			},
+			makeBackup() {
+				//TODO: move this to  the config or something
+				const appPath = remote.app.getAppPath().replace(/\\app.asar/i, '');
+
+				ncp(this.folder, path.join(appPath, '/backups'), (err) => {
+					if (err) {
+						alert('Failed to make backup', err);
+					}
 				});
 			}
 		}

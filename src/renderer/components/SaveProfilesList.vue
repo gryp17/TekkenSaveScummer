@@ -5,7 +5,7 @@
 				Main
 			</div>
 
-			<FormButton class="backup-btn">
+			<FormButton @click="makeBackup" class="backup-btn">
 				<i class="fas fa-plus"></i>
 				Make backup
 			</FormButton>
@@ -22,6 +22,16 @@
 		</div>
 	</div>
 </template>
+
+<script>
+	export default {
+		methods: {
+			makeBackup() {
+				this.$emit('make-backup');
+			}
+		}
+	};
+</script>
 
 <style scoped lang="scss">
 	.save-profiles-list {

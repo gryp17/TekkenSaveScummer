@@ -49,6 +49,7 @@ module.exports = {
 		'no-underscore-dangle': 0,
 		'object-curly-newline': 0,
 		'semi': [2, "always"],
-		'import/no-extraneous-dependencies': 0
+		'import/no-extraneous-dependencies': 0,
+		'no-alert': 0
 	}
 }
