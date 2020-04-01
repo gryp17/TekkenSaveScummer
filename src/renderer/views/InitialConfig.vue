@@ -109,8 +109,8 @@
 
 		.page-wrapper {
 			display: flex;
-			    justify-content: center;
-				align-items: center;
+			justify-content: center;
+			align-items: center;
 		}
 
 		.save-not-found {

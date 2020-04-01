@@ -9,8 +9,7 @@
 				/>
 			</div>
 
-			<hr />
-			{{ folderStats }}
+			<SaveProfilesList />
 		</PageWrapper>
 	</div>
 </template>
@@ -23,11 +22,13 @@
 	import { mapState, mapActions } from 'vuex';
 	import PageWrapper from '@/components/PageWrapper';
 	import CurrentSaveFolder from '@/components/CurrentSaveFolder';
+	import SaveProfilesList from '@/components/SaveProfilesList';
 	
 	export default {
 		components: {
 			PageWrapper,
-			CurrentSaveFolder
+			CurrentSaveFolder,
+			SaveProfilesList
 		},
 		computed: {
 			...mapState('save', [
@@ -81,7 +82,13 @@
 
 <style scoped lang="scss">
 	.save-manager-page {
+		.page-wrapper {
+			display: flex;
+			flex-direction: column;
+		}
+
 		.current-save-wrapper {
+			margin-top: 5px;
 			text-align: center;
 		}
 	}
