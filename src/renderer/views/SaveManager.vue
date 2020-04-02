@@ -20,9 +20,9 @@
 	import fs from 'fs';
 	import du from 'du';
 	import { ncp } from 'ncp';
-	import { remote } from 'electron';
-
 	import { mapState, mapActions } from 'vuex';
+
+	import config from '@/config';
 	import PageWrapper from '@/components/PageWrapper';
 	import CurrentSaveFolder from '@/components/CurrentSaveFolder';
 	import SaveProfilesList from '@/components/SaveProfilesList';
@@ -80,12 +80,17 @@
 				});
 			},
 			makeBackup() {
-				//TODO: move this to  the config or something
-				const appPath = remote.app.getAppPath().replace(/\\app.asar/i, '');
+				const date = Date.now();
 
-				ncp(this.folder, path.join(appPath, '/backups'), (err) => {
+				//TODO:
+				//create the /backups/ subdirectory if it doesn't exist
+
+				ncp(this.folder, path.join(config.appDir, '/backups/', date.toString()), (err) => {
 					if (err) {
-						alert('Failed to make backup', err);
+						alert('Failed to make backup');
+					} else {
+						//TODO:
+						//insert the vuex record with the selected profile and save folder name
 					}
 				});
 			}

@@ -3,6 +3,9 @@
 		<div class="inner-wrapper">
 			<div class="icon-wrapper">
 				<i class="fas fa-folder"></i>
+				<div class="size">
+					{{ stats.size }} MB
+				</div>
 			</div>
 			<div class="info-wrapper">
 				<div class="folder-name" :title="location">
@@ -66,10 +69,22 @@
 			display: flex;
 
 			.icon-wrapper {
+				position: relative;
 				text-align: center;
 
 				.fa-folder {
-					font-size: 70px;
+					font-size: 75px;
+				}
+
+				.size {
+					position: absolute;
+					margin-top: 3px;
+					left: 0;
+					right: 0;
+					top: 50%;
+					transform: translateY(-50%);
+					font-size: 10px;
+					color: $white;
 				}
 			}
 

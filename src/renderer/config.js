@@ -6,6 +6,7 @@ const localSubdir = '/AppData/Local/';
 const tekkenFolder = 'TekkenGame';
 
 export default {
+	appDir: remote.app.getAppPath().replace(/\\app.asar/i, ''),
 	homeDir,
 	localSubdir,
 	tekkenFolder,
