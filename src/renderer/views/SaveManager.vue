@@ -1,6 +1,6 @@
 <template>
 	<div class="save-manager-page">
-		<PageWrapper>
+		<PageWrapper v-if="folderStats">
 
 			<div class="current-save-wrapper">
 				<CurrentSaveFolder 
@@ -20,12 +20,15 @@
 	import fs from 'fs';
 	import du from 'du';
 	import { ncp } from 'ncp';
+	import { ipcRenderer } from 'electron';
 	import { mapState, mapActions } from 'vuex';
 
 	import config from '@/config';
 	import PageWrapper from '@/components/PageWrapper';
 	import CurrentSaveFolder from '@/components/CurrentSaveFolder';
 	import SaveProfilesList from '@/components/SaveProfilesList';
+
+	const stat = util.promisify(fs.stat);
 	
 	export default {
 		components: {
@@ -41,10 +44,17 @@
 		},
 		created() {
 			this.getFolderStats();
+
+			//reset the vuex store state
+			ipcRenderer.on('reset-state', () => {
+				this.resetState();
+			});
 		},
 		methods: {
 			...mapActions('save', [
-				'setFolderStats'
+				'resetState',
+				'setFolderStats',
+				'addBackup'
 			]),
 			goToInitialConfig() {
 				this.$router.push({
@@ -56,8 +66,6 @@
 					this.goToInitialConfig();
 					return;
 				}
-
-				const stat = util.promisify(fs.stat);
 
 				Promise.all([
 					stat(this.folder),
@@ -79,19 +87,30 @@
 					this.goToInitialConfig();
 				});
 			},
-			makeBackup() {
-				const date = Date.now();
-
-				//TODO:
-				//create the /backups/ subdirectory if it doesn't exist
-
-				ncp(this.folder, path.join(config.appDir, '/backups/', date.toString()), (err) => {
-					if (err) {
+			makeBackup(profile) {
+				fs.mkdir(config.backupsDir, (err) => {
+					if (err && err.code !== 'EEXIST') {
 						alert('Failed to make backup');
-					} else {
-						//TODO:
-						//insert the vuex record with the selected profile and save folder name
+						return;
 					}
+
+					const date = Date.now();
+					const folderName = `${profile}_${date}`;
+
+					ncp(this.folder, path.join(config.backupsDir, folderName), (err) => {
+						if (err) {
+							alert('Failed to make backup');
+						} else {
+							//insert the vuex record with the selected profile and save folder name
+							const backup = {
+								profile,
+								folderName,
+								modified: this.folderStats.modified
+							};
+
+							this.addBackup(backup);
+						}
+					});
 				});
 			}
 		}

@@ -1,12 +1,14 @@
 import path from 'path';
 import { remote } from 'electron';
 
+const appDir = remote.app.getAppPath().replace(/\\app.asar/i, '');
 const homeDir = remote.app.getPath('home');
 const localSubdir = '/AppData/Local/';
 const tekkenFolder = 'TekkenGame';
 
 export default {
-	appDir: remote.app.getAppPath().replace(/\\app.asar/i, ''),
+	appDir,
+	backupsDir: path.join(appDir, '/backups/'),
 	homeDir,
 	localSubdir,
 	tekkenFolder,

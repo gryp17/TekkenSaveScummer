@@ -36,6 +36,7 @@ function createWindow() {
 		{
 			label: 'Reset',
 			click() {
+				mainWindow.webContents.send('reset-state');
 				mainWindow.loadURL(winURL);
 			}
 		}

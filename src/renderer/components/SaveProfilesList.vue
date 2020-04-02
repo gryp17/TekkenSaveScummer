@@ -5,7 +5,7 @@
 				Main
 			</div>
 
-			<FormButton @click="makeBackup" class="backup-btn">
+			<FormButton @click="makeBackup(0)" class="backup-btn">
 				<i class="fas fa-plus"></i>
 				Make backup
 			</FormButton>
@@ -26,8 +26,8 @@
 <script>
 	export default {
 		methods: {
-			makeBackup() {
-				this.$emit('make-backup');
+			makeBackup(profile) {
+				this.$emit('make-backup', profile);
 			}
 		}
 	};
