@@ -2,19 +2,24 @@
 
 An application for backing up and restoring tekken 7 online save files (also known as save scumming)
 
-#### Build Setup
 
-``` bash
-# install dependencies
+## Project setup
+```
 npm install
+```
 
-# serve with hot reload at localhost:9080
-npm run dev
+### Compiles and hot-reloads for development
+```
+npm run electron:serve
+```
 
-# build electron application for production
-npm run build
+### Compiles and minifies for production
+```
+npm run electron:build
+```
 
+### Lints and fixes files
+```
+npm run
 
-# lint all JS/Vue component files in `src/`
-npm run lint
 

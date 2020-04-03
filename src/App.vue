@@ -23,13 +23,11 @@
 </script>
 
 <style lang="scss">
-
 	@font-face {
-		font-family: 'Roboto Mono';
-		src:
-			url(~@/assets/fonts/RobotoMono-Regular.woff2) format('woff2'),
-			url(~@/assets/fonts/RobotoMono-Regular.woff) format('woff'),
-			url(~@/assets/fonts/RobotoMono-Regular.ttf) format('truetype');
+		font-family: "Roboto Mono";
+		src: url(~@/assets/fonts/RobotoMono-Regular.woff2) format("woff2"),
+			url(~@/assets/fonts/RobotoMono-Regular.woff) format("woff"),
+			url(~@/assets/fonts/RobotoMono-Regular.ttf) format("truetype");
 		font-weight: normal;
 		font-style: normal;
 	}
@@ -43,11 +41,11 @@
 	body {
 		background: $background;
 		background-size: cover;
-		font-family: 'Roboto Mono';
+		font-family: "Roboto Mono";
 		color: $text-color;
 
 		:focus {
-			outline:none;
+			outline: none;
 		}
 
 		::-moz-focus-inner {

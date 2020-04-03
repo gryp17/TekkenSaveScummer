@@ -3,7 +3,7 @@
 		<PageWrapper v-if="folderStats">
 
 			<div class="current-save-wrapper">
-				<CurrentSaveFolder 
+				<CurrentSaveFolder
 					:stats="folderStats"
 					:location="folder"
 				/>
@@ -29,7 +29,7 @@
 	import SaveProfilesList from '@/components/SaveProfilesList';
 
 	const stat = util.promisify(fs.stat);
-	
+
 	export default {
 		components: {
 			PageWrapper,
@@ -83,7 +83,7 @@
 					};
 
 					this.setFolderStats(folderStats);
-				}).catch(() => {
+				}).catch((err) => {
 					this.goToInitialConfig();
 				});
 			},
