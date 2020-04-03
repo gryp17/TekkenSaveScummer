@@ -20,6 +20,6 @@ npm run electron:build
 
 ### Lints and fixes files
 ```
-npm run
+npm run lint
 
 
