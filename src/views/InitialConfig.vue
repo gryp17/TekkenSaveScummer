@@ -35,6 +35,7 @@
 
 	import PageWrapper from '@/components/PageWrapper';
 
+	const stat = util.promisify(fs.stat);
 	const { homeDir, localSubdir, defaultSaveLocation } = config;
 
 	export default {
@@ -60,6 +61,7 @@
 				this.loading = false;
 
 				if (exists) {
+					this.setSaveFolder(saveDirectory);
 					this.goToSaveManager();
 				}
 			});
@@ -69,8 +71,6 @@
 				'setSaveFolder'
 			]),
 			directoryExists(directory) {
-				const stat = util.promisify(fs.stat);
-
 				return stat(directory).then((stats) => {
 					return stats && stats.isDirectory();
 				}).catch(() => {
