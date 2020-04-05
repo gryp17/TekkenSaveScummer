@@ -17,8 +17,12 @@
 				Make backup
 			</FormButton>
 
-			<div v-for="backup in profile.backups" :key="backup.folder" class="backup">
-				{{ backup.folder }}
+			<div :key="backupsListUpdated">
+				<BackupItem
+					v-for="backup in profile.backups"
+					:key="backup.folder"
+					:backup="backup"
+				/>
 			</div>
 		</div>
 	</div>
@@ -26,8 +30,18 @@
 
 <script>
 	import { mapState, mapActions } from 'vuex';
+	import BackupItem from '@/components/BackupItem';
 
 	export default {
+		components: {
+			BackupItem
+		},
+		data() {
+			return {
+				//used in order to force the backup list to get updated (in order to update the modified/created date display)
+				backupsListUpdated: Date.now()
+			};
+		},
 		computed: {
 			...mapState('save', [
 				'profiles'
@@ -42,6 +56,9 @@
 				this.makeBackup(profile).then((backup) => {
 					if (!backup) {
 						alert('Failed to make backup');
+					} else {
+						//force the backups list to be updated
+						this.backupsListUpdated = Date.now();
 					}
 				});
 			},

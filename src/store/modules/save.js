@@ -55,7 +55,7 @@ const mutations = {
 			return;
 		}
 
-		state.profiles[profile].backups.push({
+		state.profiles[profile].backups.unshift({
 			folder: folderName,
 			created,
 			modified,

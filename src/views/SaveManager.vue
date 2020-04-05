@@ -1,7 +1,6 @@
 <template>
 	<div class="save-manager-page">
 		<PageWrapper v-if="folderStats">
-
 			<div class="current-save-wrapper">
 				<CurrentSaveFolder
 					:stats="folderStats"
