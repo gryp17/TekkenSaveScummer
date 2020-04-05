@@ -26,16 +26,13 @@
 </template>
 
 <script>
-	import util from 'util';
 	import path from 'path';
-	import fs from 'fs';
 	import { remote } from 'electron';
 	import { mapState, mapActions } from 'vuex';
 	import config from '@/config';
 
 	import PageWrapper from '@/components/PageWrapper';
 
-	const stat = util.promisify(fs.stat);
 	const { homeDir, localSubdir, defaultSaveLocation } = config;
 
 	export default {
@@ -68,15 +65,9 @@
 		},
 		methods: {
 			...mapActions('save', [
+				'directoryExists',
 				'setSaveFolder'
 			]),
-			directoryExists(directory) {
-				return stat(directory).then((stats) => {
-					return stats && stats.isDirectory();
-				}).catch(() => {
-					return false;
-				});
-			},
 			goToSaveManager() {
 				this.$router.push({
 					name: 'save-manager'

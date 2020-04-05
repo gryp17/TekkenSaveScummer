@@ -56,6 +56,13 @@ const actions = {
 	setSaveFolder({ commit }, folder) {
 		commit('SET_FOLDER', folder);
 	},
+	directoryExists({ commit }, directory) {
+		return stat(directory).then((stats) => {
+			return stats && stats.isDirectory();
+		}).catch(() => {
+			return false;
+		});
+	},
 	getSaveFolderStats({ commit, state }) {
 		if (!state.folder) {
 			return false;
