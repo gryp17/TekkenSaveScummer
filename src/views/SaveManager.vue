@@ -9,7 +9,7 @@
 				/>
 			</div>
 
-			<SaveProfilesList @make-backup="onMakeBackup"/>
+			<SaveProfilesList />
 		</PageWrapper>
 	</div>
 </template>
@@ -49,19 +49,11 @@
 		methods: {
 			...mapActions('save', [
 				'resetState',
-				'getSaveFolderStats',
-				'makeBackup'
+				'getSaveFolderStats'
 			]),
 			goToInitialConfig() {
 				this.$router.push({
 					name: 'initial-config'
-				});
-			},
-			onMakeBackup(profile) {
-				this.makeBackup(profile).then((backup) => {
-					if (!backup) {
-						alert('Failed to make backup');
-					}
 				});
 			}
 		}

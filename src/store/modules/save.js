@@ -16,7 +16,15 @@ const getDefaultState = () => {
 		folderStats: null,
 		profiles: [
 			{
-				name: 'main',
+				name: 'Slot 1',
+				backups: []
+			},
+			{
+				name: 'Slot 2',
+				backups: []
+			},
+			{
+				name: 'Slot 3',
 				backups: []
 			}
 		]
@@ -34,6 +42,13 @@ const mutations = {
 	},
 	SET_FOLDER_STATS(state, stats) {
 		state.folderStats = stats;
+	},
+	SET_PROFILE_NAME(state, { profile, name }) {
+		if (!state.profiles[profile]) {
+			return;
+		}
+
+		state.profiles[profile].name = name;
 	},
 	ADD_BACKUP(state, { profile, folderName, created, modified, size }) {
 		if (!state.profiles[profile]) {
@@ -55,6 +70,9 @@ const actions = {
 	},
 	setSaveFolder({ commit }, folder) {
 		commit('SET_FOLDER', folder);
+	},
+	setProfileName({ commit }, data) {
+		commit('SET_PROFILE_NAME', data);
 	},
 	directoryExists({ commit }, directory) {
 		return stat(directory).then((stats) => {
