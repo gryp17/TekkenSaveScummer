@@ -1,14 +1,8 @@
-import util from 'util';
-import fs from 'fs';
+import fs from 'fs-extra';
 import du from 'du';
 import path from 'path';
-import { ncp } from 'ncp';
 
 import config from '@/config';
-
-const stat = util.promisify(fs.stat);
-const mkdir = util.promisify(fs.mkdir);
-const copy = util.promisify(ncp);
 
 const getDefaultState = () => {
 	return {
@@ -61,6 +55,15 @@ const mutations = {
 			modified,
 			size
 		});
+	},
+	DELETE_BACKUP(state, { profile, folderName }) {
+		if (!state.profiles[profile]) {
+			return;
+		}
+
+		state.profiles[profile].backups = state.profiles[profile].backups.filter((backup) => {
+			return backup.folder !== folderName;
+		});
 	}
 };
 
@@ -75,7 +78,7 @@ const actions = {
 		commit('SET_PROFILE_NAME', data);
 	},
 	directoryExists({ commit }, directory) {
-		return stat(directory).then((stats) => {
+		return fs.stat(directory).then((stats) => {
 			return stats && stats.isDirectory();
 		}).catch(() => {
 			return false;
@@ -87,7 +90,7 @@ const actions = {
 		}
 
 		return Promise.all([
-			stat(state.folder),
+			fs.stat(state.folder),
 			du(state.folder)
 		]).then((results) => {
 			const stats = results[0];
@@ -108,7 +111,7 @@ const actions = {
 		});
 	},
 	makeBackup({ commit, state }, profile) {
-		return mkdir(config.backupsDir).catch((err) => {
+		return fs.mkdir(config.backupsDir).catch((err) => {
 			return err;
 		}).then((err) => {
 			if (err && err.code !== 'EEXIST') {
@@ -118,7 +121,7 @@ const actions = {
 			const date = Date.now();
 			const folderName = `${profile}_${date}`;
 
-			return copy(state.folder, path.join(config.backupsDir, folderName)).then(() => {
+			return fs.copy(state.folder, path.join(config.backupsDir, folderName)).then(() => {
 				//insert the vuex record with the selected profile and save folder name
 				const backup = {
 					profile,
@@ -133,6 +136,18 @@ const actions = {
 			}).catch(() => {
 				return false;
 			});
+		});
+	},
+	deleteBackup({ commit }, { profile, folderName }) {
+		return fs.remove(path.join(config.backupsDir, folderName)).then(() => {
+			commit('DELETE_BACKUP', {
+				profile,
+				folderName
+			});
+
+			return true;
+		}).catch(() => {
+			return false;
 		});
 	}
 };

@@ -23,7 +23,7 @@
 				Restore
 			</FormButton>
 
-			<FormButton red>
+			<FormButton red @click="deleteBackup">
 				Delete
 			</FormButton>
 		</div>
@@ -49,6 +49,11 @@
 			},
 			modifiedAgo() {
 				return moment(this.backup.modified).fromNow();
+			}
+		},
+		methods: {
+			deleteBackup() {
+				this.$emit('delete-backup', this.backup.folder);
 			}
 		}
 	};

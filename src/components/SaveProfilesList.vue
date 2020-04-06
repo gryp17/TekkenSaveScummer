@@ -22,6 +22,7 @@
 					v-for="backup in profile.backups"
 					:key="backup.folder"
 					:backup="backup"
+					@delete-backup="onDeleteBackup(index, $event)"
 				/>
 			</div>
 		</div>
@@ -50,6 +51,7 @@
 		methods: {
 			...mapActions('save', [
 				'makeBackup',
+				'deleteBackup',
 				'setProfileName'
 			]),
 			onMakeBackup(profile) {
@@ -59,6 +61,20 @@
 					} else {
 						//force the backups list to be updated
 						this.backupsListUpdated = Date.now();
+					}
+				});
+			},
+			onDeleteBackup(profile, folderName) {
+				const params = {
+					profile,
+					folderName
+				};
+
+				//TODO: SHOW CONFIRMATION DIALOG BEFORE DELETING!!!
+
+				this.deleteBackup(params).then((success) => {
+					if (!success) {
+						alert('Failed to delete backup');
 					}
 				});
 			},
