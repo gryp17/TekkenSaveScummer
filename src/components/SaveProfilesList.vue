@@ -31,6 +31,7 @@
 
 <script>
 	import { mapState, mapActions } from 'vuex';
+	import { remote } from 'electron';
 	import BackupItem from '@/components/BackupItem';
 
 	export default {
@@ -65,16 +66,30 @@
 				});
 			},
 			onDeleteBackup(profile, folderName) {
-				const params = {
-					profile,
-					folderName
+				const options = {
+					type: 'question',
+					message: 'Are you sure you want to delete the backup?',
+					detail: 'This action is irreversible.',
+					buttons: [
+						'Yes',
+						'No'
+					]
 				};
 
-				//TODO: SHOW CONFIRMATION DIALOG BEFORE DELETING!!!
+				//show a confirmation dialog before deleting the backup
+				remote.dialog.showMessageBox(options).then(({ response }) => {
+					//user has confirmed (clicked the first button)
+					if (response === 0) {
+						const params = {
+							profile,
+							folderName
+						};
 
-				this.deleteBackup(params).then((success) => {
-					if (!success) {
-						alert('Failed to delete backup');
+						this.deleteBackup(params).then((success) => {
+							if (!success) {
+								alert('Failed to delete backup');
+							}
+						});
 					}
 				});
 			},
