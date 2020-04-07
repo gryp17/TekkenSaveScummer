@@ -84,23 +84,24 @@ const actions = {
 			return false;
 		});
 	},
-	getSaveFolderStats({ commit, state }) {
+	getSaveFolderStats({ commit, dispatch, state }) {
 		if (!state.folder) {
 			return false;
 		}
 
 		return Promise.all([
 			fs.stat(state.folder),
+			dispatch('getModifiedDate', state.folder),
 			du(state.folder)
 		]).then((results) => {
 			const stats = results[0];
-			const sizeInMB = ((results[1] / 1024) / 1024).toFixed(2);
+			const modified = results[1];
+			const sizeInMB = ((results[2] / 1024) / 1024).toFixed(2);
 
 			const folderStats = {
 				name: state.folder.split('\\').pop(),
 				created: stats.birthtime,
-				//TODO: this will probably need to check the inner files as well
-				modified: stats.mtime,
+				modified,
 				size: sizeInMB
 			};
 
@@ -108,6 +109,49 @@ const actions = {
 			return folderStats;
 		}).catch(() => {
 			return false;
+		});
+	},
+	/**
+	 * Returns the modified date of the last modified file in the list
+	 * @param {Object} context
+	 * @param {String} folder
+	 * @returns {Promise}
+	 */
+	getModifiedDate({ dispatch }, folder) {
+		return dispatch('getDirectoryFiles', folder).then((files) => {
+			const tasks = files.map((file) => {
+				return fs.stat(file);
+			});
+
+			return Promise.all(tasks);
+		}).then((stats) => {
+			const orderedByDate = stats.sort((a, b) => {
+				return a.mtime < b.mtime ? 1 : -1;
+			});
+
+			return orderedByDate[0].mtime;
+		});
+	},
+	/**
+	 * Returns all files in the provided directory recursively
+	 * @param {Object} context
+	 * @param {String} folder
+	 * @returns {Promise}
+	 */
+	getDirectoryFiles({ dispatch }, folder) {
+		return fs.readdir(folder, { withFileTypes: true }).then((items) => {
+			const tasks = items.map((item) => {
+				const itemPath = path.resolve(folder, item.name);
+				if (item.isDirectory()) {
+					return dispatch('getDirectoryFiles', itemPath);
+				}
+
+				return itemPath;
+			});
+
+			return Promise.all(tasks);
+		}).then((files) => {
+			return files.flat();
 		});
 	},
 	makeBackup({ commit, state }, profile) {
