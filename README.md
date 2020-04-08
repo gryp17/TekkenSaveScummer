@@ -1,6 +1,6 @@
 # TekkenSaveScummer
 
-An application for backing up and restoring tekken 7 online save files (also known as save scumming)
+An application for managing Tekken 7 online save files (also known as save scumming)
 
 
 ## Project setup
@@ -21,5 +21,5 @@ npm run electron:build
 ### Lints and fixes files
 ```
 npm run lint
-
+```
 
