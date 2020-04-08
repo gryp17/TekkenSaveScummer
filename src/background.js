@@ -1,5 +1,5 @@
 
-import { app, protocol, BrowserWindow, Menu } from 'electron';
+import { app, protocol, BrowserWindow, Menu, ipcMain } from 'electron';
 import {
 	createProtocol,
 	installVueDevtools
@@ -34,18 +34,32 @@ function createWindow() {
 		win.loadURL(winUrl);
 	}
 
-	//temporal menu
 	const menu = Menu.buildFromTemplate([
 		{
-			label: 'Reset',
-			click() {
-				win.webContents.send('reset-state');
-				win.loadURL(winUrl);
-			}
+			label: 'Menu',
+			submenu: [
+				{
+					label: 'Reset',
+					click() {
+						win.webContents.send('reset-app');
+					}
+				},
+				{
+					label: 'Exit',
+					click() {
+						app.quit();
+					}
+				}
+			]
 		}
 	]);
 
 	Menu.setApplicationMenu(menu);
+
+	//listen for the 'reload-app' event and reload the main page
+	ipcMain.on('reload-app', (event, value) => {
+		win.loadURL(winUrl);
+	});
 
 	win.on('closed', () => {
 		win = null;

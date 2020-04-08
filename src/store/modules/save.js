@@ -68,8 +68,18 @@ const mutations = {
 };
 
 const actions = {
-	resetState({ commit }) {
-		commit('RESET_STATE');
+	/**
+	 * Resets the application configuration and deletes the backups directory
+	 * @param {Object} context
+	 * @returns {Promise}
+	 */
+	resetApp({ commit }) {
+		return fs.remove(config.backupsDir).then(() => {
+			commit('RESET_STATE');
+			return true;
+		}).catch(() => {
+			return false;
+		});
 	},
 	setSaveFolder({ commit }, folder) {
 		commit('SET_FOLDER', folder);

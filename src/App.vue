@@ -6,7 +6,9 @@
 </template>
 
 <script>
+	import { remote, ipcRenderer } from 'electron';
 	import Vue from 'vue';
+	import { mapActions } from 'vuex';
 
 	import Header from '@/components/Header';
 
@@ -18,6 +20,41 @@
 	export default {
 		components: {
 			Header
+		},
+		created() {
+			//listen for the reset-app event
+			ipcRenderer.on('reset-app', () => {
+				this.onResetApp();
+			});
+		},
+		methods: {
+			...mapActions('save', [
+				'resetApp'
+			]),
+			onResetApp() {
+				const options = {
+					type: 'question',
+					message: 'Are you sure you want to reset the configuration?',
+					detail: 'This action will delete all your backups.',
+					buttons: [
+						'OK',
+						'Cancel'
+					]
+				};
+
+				remote.dialog.showMessageBox(options).then(({ response }) => {
+					//user has confirmed (clicked the first button)
+					if (response === 0) {
+						this.resetApp().then((success) => {
+							if (success) {
+								ipcRenderer.send('reload-app');
+							} else {
+								alert('Failed to reset the configuration');
+							}
+						});
+					}
+				});
+			}
 		}
 	};
 </script>

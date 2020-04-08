@@ -14,7 +14,6 @@
 </template>
 
 <script>
-	import { ipcRenderer } from 'electron';
 	import { mapState, mapActions } from 'vuex';
 
 	import PageWrapper from '@/components/PageWrapper';
@@ -39,15 +38,9 @@
 					this.goToInitialConfig();
 				}
 			});
-
-			//reset the vuex store state
-			ipcRenderer.on('reset-state', () => {
-				this.resetState();
-			});
 		},
 		methods: {
 			...mapActions('save', [
-				'resetState',
 				'getSaveFolderStats'
 			]),
 			goToInitialConfig() {

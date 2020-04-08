@@ -71,8 +71,8 @@
 					message: 'Are you sure you want to delete the backup?',
 					detail: 'This action is irreversible.',
 					buttons: [
-						'Yes',
-						'No'
+						'OK',
+						'Cancel'
 					]
 				};
 
