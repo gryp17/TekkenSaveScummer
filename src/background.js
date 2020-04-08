@@ -39,7 +39,13 @@ function createWindow() {
 			label: 'Menu',
 			submenu: [
 				{
-					label: 'Reset',
+					label: 'FAQ',
+					click() {
+						win.webContents.send('show-faq');
+					}
+				},
+				{
+					label: 'Reset configuration',
 					click() {
 						win.webContents.send('reset-app');
 					}

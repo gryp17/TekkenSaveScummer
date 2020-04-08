@@ -22,7 +22,10 @@
 			Header
 		},
 		created() {
-			//listen for the reset-app event
+			ipcRenderer.on('show-faq', () => {
+				this.openFAQ();
+			});
+
 			ipcRenderer.on('reset-app', () => {
 				this.onResetApp();
 			});
@@ -31,6 +34,23 @@
 			...mapActions('save', [
 				'resetApp'
 			]),
+			openFAQ() {
+				const detail = `Q: My save game gets overwritten every time I start the game?
+
+					A: If you have Steam cloud enabled Steam will overwrite any changes to the backup directory made by this tool. You need to disable Steam cloud save.
+				`;
+
+				const options = {
+					type: 'question',
+					message: 'FAQ',
+					detail,
+					buttons: [
+						'Close'
+					]
+				};
+
+				remote.dialog.showMessageBox(options);
+			},
 			onResetApp() {
 				const options = {
 					type: 'question',
