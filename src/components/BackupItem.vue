@@ -19,7 +19,7 @@
 		</div>
 
 		<div class="actions">
-			<FormButton>
+			<FormButton @click="restoreBackup">
 				Restore
 			</FormButton>
 
@@ -54,6 +54,9 @@
 		methods: {
 			deleteBackup() {
 				this.$emit('delete-backup', this.backup.folder);
+			},
+			restoreBackup() {
+				this.$emit('restore-backup', this.backup.folder);
 			}
 		}
 	};

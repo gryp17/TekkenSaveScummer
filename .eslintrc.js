@@ -43,6 +43,7 @@ module.exports = {
 		'object-curly-newline': 0,
 		'semi': [2, 'always'],
 		'import/no-extraneous-dependencies': 0,
+		'newline-per-chained-call': 0,
 		'no-alert': 0,
 		'indent': ['error', 'tab'],
 		'vue/html-indent': ['error', 'tab'],

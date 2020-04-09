@@ -203,6 +203,33 @@ const actions = {
 		}).catch(() => {
 			return false;
 		});
+	},
+	restoreBackup({ commit, dispatch, state }, { profile, folderName }) {
+		const tempFolder = `${state.folder}_TEMP`;
+		const backupFolder = path.join(config.backupsDir, folderName);
+
+		//make a temp folder with the current save folder
+		return fs.copy(state.folder, tempFolder)
+			.then(() => {
+				//delete the current save folder
+				return fs.remove(state.folder);
+			}).then(() => {
+				//copy the backup folder
+				return fs.copy(backupFolder, state.folder);
+			}).then(() => {
+				//remove the temp folder and fetch the new folder stats
+				fs.remove(tempFolder);
+				return dispatch('getSaveFolderStats');
+			}).then((stats) => {
+				return !!stats;
+			}).catch(() => {
+				//in case something fails - move back the backup files
+				fs.copy(tempFolder, state.folder).then(() => {
+					fs.remove(tempFolder);
+				});
+
+				return false;
+			});
 	}
 };
 

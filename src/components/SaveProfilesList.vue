@@ -23,6 +23,7 @@
 					:key="backup.folder"
 					:backup="backup"
 					@delete-backup="onDeleteBackup(index, $event)"
+					@restore-backup="onRestoreBackup(index, $event)"
 				/>
 			</div>
 		</div>
@@ -53,6 +54,7 @@
 			...mapActions('save', [
 				'makeBackup',
 				'deleteBackup',
+				'restoreBackup',
 				'setProfileName'
 			]),
 			onMakeBackup(profile) {
@@ -88,6 +90,36 @@
 						this.deleteBackup(params).then((success) => {
 							if (!success) {
 								alert('Failed to delete backup');
+							}
+						});
+					}
+				});
+			},
+			onRestoreBackup(profile, folderName) {
+				const options = {
+					type: 'question',
+					message: 'Are you sure you want to restore this backup?',
+					detail: 'This action will overwrite your current save data.',
+					buttons: [
+						'OK',
+						'Cancel'
+					]
+				};
+
+				//show a confirmation dialog before restoring the backup
+				remote.dialog.showMessageBox(options).then(({ response }) => {
+					//user has confirmed (clicked the first button)
+					if (response === 0) {
+						const params = {
+							profile,
+							folderName
+						};
+
+						this.restoreBackup(params).then((success) => {
+							if (!success) {
+								alert('Failed to restore backup');
+							} else {
+								alert('Backup restored successfully');
 							}
 						});
 					}
