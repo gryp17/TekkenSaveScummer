@@ -208,7 +208,7 @@ const actions = {
 		const tempFolder = `${state.folder}_TEMP`;
 		const backupFolder = path.join(config.backupsDir, folderName);
 
-		//make a temp folder with the current save folder
+		//make a temp folder from the current save folder
 		return fs.copy(state.folder, tempFolder)
 			.then(() => {
 				//delete the current save folder
