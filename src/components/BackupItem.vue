@@ -65,11 +65,10 @@
 <style scoped lang="scss">
 	.backup-item {
 		margin-top: 5px;
-		padding: 5px;
 		background-color: $very-dark-blue;
 
 		.header {
-			margin-bottom: 5px;
+			padding: 5px;
 			font-size: 13px;
 
 			.info {
@@ -80,13 +79,12 @@
 
 		.actions {
 			display: flex;
+			flex-wrap: wrap;
+			padding: 3px;
 
 			.form-button {
 				flex: 1;
-
-				+ .form-button {
-					margin-left: 5px;
-				}
+				margin: 2px;
 			}
 		}
 	}

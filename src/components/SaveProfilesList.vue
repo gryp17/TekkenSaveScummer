@@ -143,6 +143,7 @@
 
 		.column {
 			flex: 1;
+			overflow: hidden;
 			padding: 5px;
 
 			.title {
@@ -154,7 +155,7 @@
 				background-color: transparent;
 				color: $text-color;
 				font-size: 15px;
-				cursor: pointer;
+				cursor: text;
 
 				&:hover, &:focus {
 					background-color: $white;
@@ -172,10 +173,12 @@
 				margin-top: 5px;
 				width: 100%;
 				background-color: transparent;
-				border: solid 3px rgba($white, 0.6);
+				border: solid 3px $white;
 
 				&:hover {
+					background-color: $white;
 					border-color: $white;
+					color: $very-dark-blue;
 				}
 			}
 		}
