@@ -1,4 +1,13 @@
 module.exports = {
+	pluginOptions: {
+		electronBuilder: {
+			builderOptions: {
+				win: {
+					icon: './build/icons/win/icon.ico'
+				}
+			}
+		}
+	},
 	css: {
 		loaderOptions: {
 			sass: {
