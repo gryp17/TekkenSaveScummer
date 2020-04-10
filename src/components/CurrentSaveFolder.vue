@@ -93,7 +93,6 @@
 
 				.folder-name {
 					font-size: 26px;
-					text-align: center;
 				}
 			}
 		}
