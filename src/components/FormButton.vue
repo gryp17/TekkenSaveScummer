@@ -42,6 +42,7 @@
 		color: $white;
 		transition: all 0.4s ease-in-out;
 		font-size: 16px;
+		font-weight: bold;
 		cursor: pointer;
 
 		&:hover, &:active, &:focus, &.active {

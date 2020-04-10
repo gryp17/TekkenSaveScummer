@@ -1,7 +1,9 @@
 <template>
 	<div id="app">
-		<Header />
-		<router-view class="page"></router-view>
+		<PageWrapper>
+			<Header />
+			<router-view class="page"></router-view>
+		</PageWrapper>
 	</div>
 </template>
 
@@ -10,6 +12,7 @@
 	import Vue from 'vue';
 	import { mapActions } from 'vuex';
 
+	import PageWrapper from '@/components/PageWrapper';
 	import Header from '@/components/Header';
 
 	//common/global components
@@ -19,6 +22,7 @@
 
 	export default {
 		components: {
+			PageWrapper,
 			Header
 		},
 		created() {

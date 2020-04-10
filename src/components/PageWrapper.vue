@@ -6,8 +6,10 @@
 
 <style lang="scss">
 	.page-wrapper {
+		display: flex;
+		flex-direction: column;
 		flex: 1;
-		padding: 10px;
+		margin: 10px;
 		background-color: $overlay-background;
 		color: $text-color;
 	}

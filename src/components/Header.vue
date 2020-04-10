@@ -6,9 +6,10 @@
 
 <style scoped lang="scss">
 	.header {
-		padding: 15px 15px 10px 15px;
-		font-size: 30px;
+		padding: 15px;
+		font-size: 34px;
 		font-weight: bold;
 		text-align: center;
+		text-shadow: 6px 6px 7px black;
 	}
 </style>

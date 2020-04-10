@@ -1,27 +1,25 @@
 <template>
-	<div class="initial-config-page">
-		<PageWrapper v-show="!loading">
-			<div class="save-not-found">
-				<i class="fas fa-exclamation-triangle"></i>
+	<div class="initial-config-page" v-show="!loading">
+		<div class="save-not-found">
+			<i class="fas fa-exclamation-triangle"></i>
 
-				<h3>
-					No tekken save was found
-				</h3>
+			<h3>
+				No tekken save was found
+			</h3>
 
-				<p>
-					Please specify the tekken save location.
-					<br />
-					<span class="small">
-						(Default location: {{ defaultSaveLocation }})
-					</span>
-				</p>
+			<p>
+				Please specify the tekken save location.
+				<br />
+				<span class="small">
+					(Default location: {{ defaultSaveLocation }})
+				</span>
+			</p>
 
-				<FormButton @click="openSaveLocationDialog">
-					<i class="far fa-folder-open"></i>
-					Select save folder
-				</FormButton>
-			</div>
-		</PageWrapper>
+			<FormButton @click="openSaveLocationDialog">
+				<i class="far fa-folder-open"></i>
+				Select save folder
+			</FormButton>
+		</div>
 	</div>
 </template>
 
@@ -31,14 +29,9 @@
 	import { mapState, mapActions } from 'vuex';
 	import config from '@/config';
 
-	import PageWrapper from '@/components/PageWrapper';
-
 	const { homeDir, localSubdir, defaultSaveLocation } = config;
 
 	export default {
-		components: {
-			PageWrapper
-		},
 		data() {
 			return {
 				loading: true,
@@ -97,12 +90,8 @@
 
 <style scoped lang="scss">
 	.initial-config-page {
-
-		.page-wrapper {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-		}
+		display: flex;
+		justify-content: center;
 
 		.save-not-found {
 			text-align: center;
