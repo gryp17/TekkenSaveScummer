@@ -11,9 +11,6 @@
 				<div class="folder-name" :title="location">
 					{{ stats.name }}
 				</div>
-				<div :title="created">
-					Created: {{ createdAgo }}
-				</div>
 				<div :title="modified">
 					Modified: {{ modifiedAgo }}
 				</div>
@@ -34,12 +31,6 @@
 		computed: {
 			name() {
 				return this.stats.name;
-			},
-			created() {
-				return moment(this.stats.created).format('YYYY-MM-DD HH:mm:ss');
-			},
-			createdAgo() {
-				return moment(this.stats.created).fromNow();
 			},
 			modified() {
 				return moment(this.stats.modified).format('YYYY-MM-DD HH:mm:ss');
@@ -63,7 +54,13 @@
 		color: $very-dark-blue;
 		background-color: $yellow;
 		border-radius: 5px;
+		box-shadow: 6px 6px 16px 5px $lighter-black;
+		transition: all 0.4s ease-in-out;
 		cursor: pointer;
+
+		&:hover {
+			box-shadow: 6px 6px 13px 1px $lighter-black;
+		}
 
 		.inner-wrapper {
 			display: flex;
@@ -89,6 +86,7 @@
 			}
 
 			.info-wrapper {
+				padding-top: 10px;
 				padding-left: 20px;
 				text-align: left;
 				font-size: 14px;

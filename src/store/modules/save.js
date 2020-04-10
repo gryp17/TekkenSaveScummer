@@ -100,17 +100,14 @@ const actions = {
 		}
 
 		return Promise.all([
-			fs.stat(state.folder),
 			dispatch('getModifiedDate', state.folder),
 			du(state.folder)
 		]).then((results) => {
-			const stats = results[0];
-			const modified = results[1];
-			const sizeInMB = ((results[2] / 1024) / 1024).toFixed(2);
+			const modified = results[0];
+			const sizeInMB = ((results[1] / 1024) / 1024).toFixed(2);
 
 			const folderStats = {
 				name: state.folder.split('\\').pop(),
-				created: stats.birthtime,
 				modified,
 				size: sizeInMB
 			};
