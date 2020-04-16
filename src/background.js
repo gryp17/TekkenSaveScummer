@@ -19,6 +19,7 @@ function createWindow() {
 
 	// Create the browser window.
 	win = new BrowserWindow({
+		title: 'Tekken Save Scummer',
 		width: 800,
 		height: 600,
 		webPreferences: {

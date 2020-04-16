@@ -1,4 +1,12 @@
 module.exports = {
+	//set custom app/window title
+	chainWebpack: (config) => {
+		config.plugin('html').tap((args) => {
+			args[0].title = 'Tekken Save Scummer';
+			return args;
+		});
+	},
+	//set custom app icon
 	pluginOptions: {
 		electronBuilder: {
 			builderOptions: {
