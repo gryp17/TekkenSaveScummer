@@ -38,6 +38,9 @@
 			...mapActions('save', [
 				'resetApp'
 			]),
+			/**
+			 * Opens the FAQ message box
+			 */
 			openFAQ() {
 				const detail = `Q: My save game gets overwritten every time I start the game?
 
@@ -55,6 +58,9 @@
 
 				remote.dialog.showMessageBox(options);
 			},
+			/**
+			 * Opens the reset app confirmation dialog and resets the app state
+			 */
 			onResetApp() {
 				const options = {
 					type: 'question',

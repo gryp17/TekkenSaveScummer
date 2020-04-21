@@ -41,6 +41,9 @@
 			...mapActions('save', [
 				'getSaveFolderStats'
 			]),
+			/**
+			 * Redirects to the initial config page/view
+			 */
 			goToInitialConfig() {
 				this.$router.push({
 					name: 'initial-config'

@@ -81,12 +81,28 @@ const actions = {
 			return false;
 		});
 	},
+	/**
+	 * Sets the save folder
+	 * @param {Object} context
+	 * @param {String} folder
+	 */
 	setSaveFolder({ commit }, folder) {
 		commit('SET_FOLDER', folder);
 	},
+	/**
+	 * Sets the profile name
+	 * @param {Object} context
+	 * @param {Object} data
+	 */
 	setProfileName({ commit }, data) {
 		commit('SET_PROFILE_NAME', data);
 	},
+	/**
+	 * Checks if the directory exists
+	 * @param {Object} context
+	 * @param {String} directory
+	 * @returns {Promise}
+	 */
 	directoryExists({ commit }, directory) {
 		return fs.stat(directory).then((stats) => {
 			return stats && stats.isDirectory();
@@ -94,6 +110,11 @@ const actions = {
 			return false;
 		});
 	},
+	/**
+	 * Gets the save folder stats
+	 * @param {Object} context
+	 * @returns {Promise}
+	 */
 	getSaveFolderStats({ commit, dispatch, state }) {
 		if (!state.folder) {
 			return false;
@@ -161,6 +182,12 @@ const actions = {
 			return files.flat();
 		});
 	},
+	/**
+	 * Created a new backup
+	 * @param {Object} context
+	 * @param {Number} profile
+	 * @returns {Promise}
+	 */
 	makeBackup({ commit, state }, profile) {
 		return fs.mkdir(config.backupsDir).catch((err) => {
 			return err;
@@ -189,6 +216,12 @@ const actions = {
 			});
 		});
 	},
+	/**
+	 * Deleted a backup
+	 * @param {Object} context
+	 * @param {Object} data
+	 * @returns {Promise}
+	 */
 	deleteBackup({ commit }, { profile, folderName }) {
 		return fs.remove(path.join(config.backupsDir, folderName)).then(() => {
 			commit('DELETE_BACKUP', {
@@ -201,6 +234,12 @@ const actions = {
 			return false;
 		});
 	},
+	/**
+	 * Restores a backup
+	 * @param {Object} context
+	 * @param {Object} data
+	 * @returns {Promise}
+	 */
 	restoreBackup({ commit, dispatch, state }, { profile, folderName }) {
 		const tempFolder = `${state.folder}_TEMP`;
 		const backupFolder = path.join(config.backupsDir, folderName);

@@ -57,6 +57,10 @@
 				'restoreBackup',
 				'setProfileName'
 			]),
+			/**
+			 * Adds new backup in the provided profile
+			 * @param {Number} profile
+			 */
 			onMakeBackup(profile) {
 				this.makeBackup(profile).then((backup) => {
 					if (!backup) {
@@ -67,6 +71,11 @@
 					}
 				});
 			},
+			/**
+			 * Deletes a backup in the provided profile
+			 * @param {Number} profile
+			 * @param {String} folderName
+			 */
 			onDeleteBackup(profile, folderName) {
 				const options = {
 					type: 'question',
@@ -95,6 +104,11 @@
 					}
 				});
 			},
+			/**
+			 * Restores a backup from the provided profile
+			 * @param {Number} profile
+			 * @param {String} folderName
+			 */
 			onRestoreBackup(profile, folderName) {
 				const options = {
 					type: 'question',
@@ -125,6 +139,11 @@
 					}
 				});
 			},
+			/**
+			 * Handles the changes in the profile name
+			 * @param {Object} e
+			 * @param {Number} profile
+			 */
 			onNameChange(e, profile) {
 				this.setProfileName({
 					profile,

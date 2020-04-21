@@ -40,6 +40,9 @@
 			}
 		},
 		methods: {
+			/**
+			 * Opens the save folder location in the file system explorer
+			 */
 			openFolder() {
 				remote.shell.openItem(this.location);
 			}

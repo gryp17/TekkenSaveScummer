@@ -61,11 +61,17 @@
 				'directoryExists',
 				'setSaveFolder'
 			]),
+			/**
+			 * Redirects to the save manager page/view
+			 */
 			goToSaveManager() {
 				this.$router.push({
 					name: 'save-manager'
 				});
 			},
+			/**
+			 * Opens the browse dialog for the save location
+			 */
 			openSaveLocationDialog() {
 				const options = {
 					defaultPath: path.join(homeDir, localSubdir),

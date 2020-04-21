@@ -52,9 +52,15 @@
 			}
 		},
 		methods: {
+			/**
+			 * Emits the delete-backup event
+			 */
 			deleteBackup() {
 				this.$emit('delete-backup', this.backup.folder);
 			},
+			/**
+			 * Emits the restore-backup event
+			 */
 			restoreBackup() {
 				this.$emit('restore-backup', this.backup.folder);
 			}
