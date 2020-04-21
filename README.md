@@ -1,6 +1,6 @@
 # TekkenSaveScummer
 
-An application for managing Tekken 7 online save files (also known as save scumming)
+Electron/VueJS application for managing Tekken 7 online save files (also known as save scumming)
 
 
 ## Project setup
